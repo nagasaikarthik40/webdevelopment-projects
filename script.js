@@ -1,28 +1,39 @@
-let screen=document.getElementById("screen");
-let buttons=document.querySelectorAll('button');
-let screenValue='';
 
-for(let item of buttons)
-{
-    item.addEventListener('click', clickedButton)
-}
+    const taskInput = document.getElementById('task-input');
+    const addTaskButton = document.getElementById('add-task-button');
+    taskList = document.getElementById('task-list');
 
-function clickedButton(e)
-{
-    buttonText=e.target.innerText;
+    // Function to add a new task
+    function addTask() {
+        const taskText = taskInput.value.trim();
 
-    if(buttonText=='C')
-    {
-        screenValue='';
-        screen.value=screenValue;
+        if (taskText == '') {
+            alert('Please enter a task!');
+            return;
+        }
+
+        const listItem = document.createElement('li');
+        listItem.classList.add('task-item');
+        listItem.innerHTML = `${taskText} <button>Delete</button>`;
+
+       taskList.appendChild(listItem);
+
+        // Clear the input field after adding a task
+        taskInput.value = '';
+
+        // Add delete functionality to the button
+        listItem.querySelector('button').addEventListener('click', deleteTask);
+
+        //function to delte the list
+        function deleteTask()
+        {
+            taskList.removeChild(listItem);
+        }
+
     }
-    else if(buttonText=='=')
-    {
-        screen.value=eval(screenValue)
-    }
+    
 
-    else{
-        screenValue+=buttonText;
-        screen.value=screenValue;
-    }
-}
+    // Add task on button click
+    addTaskButton.addEventListener('click', addTask);
+
+    
